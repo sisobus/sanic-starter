@@ -1,0 +1,16 @@
+venv/*
+mongo_data/*
+redis_data/*
+data/*
+__pycache__/*
+*.swa
+*.swp
+*.pyc
+*.dcm
+*.lock
+*.c
+*.so
+*.tar
+DS_STORE
+desktop.ini
+api/migrations/*

@@ -1,0 +1,41 @@
+nginx:
+  restart: always
+  build: ./nginx
+  ports:
+    - "80:80"
+  volumes_from:
+    - api
+  links:
+    - api:api
+
+api:
+  restart: always
+  build: ./api
+  command: python app.py
+  expose:
+    - "8000"
+  env_file: .env
+  links:
+    - postgres:postgres
+    - redis
+
+data:
+  image: postgres:latest
+  volumes:
+    - ./data:/var/lib/postgresql/data
+  command: "true"
+
+postgres:
+  restart: always
+  image: postgres:latest
+  volumes_from:
+    - data
+  ports:
+    - "5432:5432"
+
+redis:
+  image: redis
+  volumes:
+    - ./redis_data:/data
+  ports:
+    - "6379:6379"
